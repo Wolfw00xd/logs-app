@@ -25,12 +25,12 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        repository: Wolfw00xd/logs-app
+        repository: wolfw00xd/logs-app
         tags: |
           $(tag)
     - script: |
         docker ps -a
         docker images
-        docker run -d Wolfw00xd/logs-app:$(tag)
+        docker run -d wolfw00xd/logs-app:$(tag)
         docker ps -a
 
