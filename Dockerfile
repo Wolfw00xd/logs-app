@@ -5,7 +5,7 @@ WORKDIR /opt/app
 
 COPY . .
 
-RUN ls -lah
+RUN ls -lah > need.txt
 
 RUN echo "Hi"
 
