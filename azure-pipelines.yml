@@ -31,8 +31,8 @@ stages:
     - script: |
         docker ps -a
         docker images
-        docker run -d wolfw00xd/logs-app:$(tag)
+        docker run -d wolfw00xd/logs-app:$(tag) --name $(tag)
         docker ps -a
-        docker cp  wolfw00xd/logs-app:$(tag):/opt/app/need.txt .
+        docker cp  $(tag):/opt/app/need.txt .
         cat need.txt
 
