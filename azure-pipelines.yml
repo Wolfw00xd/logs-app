@@ -28,5 +28,8 @@ stages:
         tags: |
           $(tag)
     - script: |
-        docker run $(tag)
+        docker ps -a
+        docker images
+        docker run -d Wolfw00xd/logs-app:$(tag)
+        docker ps -a
 
