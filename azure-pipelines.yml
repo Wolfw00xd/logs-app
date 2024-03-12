@@ -25,6 +25,7 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        repository: Wolfw00xd/logs-app
         tags: |
           $(tag)
     - script: |
