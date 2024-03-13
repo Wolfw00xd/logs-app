@@ -31,9 +31,9 @@ stages:
     - script: |
         docker ps -a
         docker images
-        docker run -d --name qqqq wolfw00xd/logs-app:$(tag)
+        docker run -d --name $(Build.BuildId) wolfw00xd/logs-app:$(tag)
         docker ps -a
-        docker cp  qqqq:/opt/app/need.txt .
+        docker cp  $(Build.BuildId):/opt/app/need.txt .
         cat need.txt
     - script: |
         curl -D- \
