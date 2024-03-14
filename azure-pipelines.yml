@@ -38,7 +38,9 @@ stages:
     - script: |
         cat need.txt | awk '{print $9}' > data1
         echo $(Build.BuildId) >> data1
-        sed -z 's/\n/\\n/g' data1 >> data
+        cat data1
+        sed -z 's/\n/\\n/g' data1 > data
+        cat data
         data=$(cat data)
         version=$(curl -H "Authorization:Basic $(TOKEN)" -X GET "https://ga4i.atlassian.net/wiki/api/v2/pages/7929857/" | jq -r '.version.number')
         newversion=$((version+1))
