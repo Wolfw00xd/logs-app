@@ -37,8 +37,9 @@ stages:
         cat need.txt
     - script: |
         echo $(Build.BuildId) > data1
-        sed -z 's/\n/\\n/g' need.txt >> data1
-        data=$(cat data1)
+        cat need.txt | awk '{print $9}' >> data1
+        sed -z 's/\n/\\n/g' data1 >> data
+        data=$(cat data)
         version=$(curl -H "Authorization:Basic $(TOKEN)" -X GET "https://ga4i.atlassian.net/wiki/api/v2/pages/7929857/" | jq -r '.version.number')
         newversion=$((version+1))
         curl -D- -H "Content-Type:application/json" -H "Authorization:Basic $(TOKEN)" -X PUT --data "{\"id\":\"7929857\",\"type\":\"page\",\"title\":\"test pipeline\",\"space\":{\"key\":\"ga4i\"},\"body\":{\"storage\":{\"value\":\"$data\",\"representation\":\"storage\"}},\"version\":{\"number\":\"$newversion\"}}" https://ga4i.atlassian.net/wiki/rest/api/content/7929857
