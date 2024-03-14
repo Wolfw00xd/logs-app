@@ -35,13 +35,5 @@ stages:
         docker ps -a
         cat need.txt
     - script: |
-        cat need.txt | awk '{print $9}' > scripts.build-$(Build.BuildId).txt
-        curl -D- \
-        -H "Authorization:Basic $(TOKEN)" \
-        -X PUT \
-        -H 'X-Atlassian-Token: nocheck' \
-        -F 'file=@"scripts.build-$(Build.BuildId).txt"' \
-        -F 'minorEdit="true"' \
-        -F 'comment="hashes from build-$(Build.BuildId)"; type=text/plain; charset=utf-8' \
-        --url 'https://ga4i.atlassian.net/wiki/rest/api/content/9535489/child/attachment'
-
+        cat need.txt | awk '{print $9}' > scripts_hashes.txt
+        curl -D- -H "Authorization:Basic $(TOKEN)"  -X PUT -H 'X-Atlassian-Token: nocheck' -F 'file=@"scripts_hashes.txt"' -F 'minorEdit="true"' -F 'comment="hashes from build-$(Build.BuildId)"; type=text/plain; charset=utf-8' --url 'https://ga4i.atlassian.net/wiki/rest/api/content/9535489/child/attachment'
