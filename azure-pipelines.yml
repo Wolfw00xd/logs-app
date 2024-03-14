@@ -29,12 +29,6 @@ stages:
         tags: |
           $(tag)
     - script: |
-        docker ps -a
-        docker images
         docker run -v $PWD:/opt/mount --rm --entrypoint cp wolfw00xd/logs-app:$(tag) /opt/app/need.txt /opt/mount/need.txt
-        docker ps -a
-        cat need.txt
-    - script: |
-        cat need.txt | awk '{print $9}' > scripts_hashes.txt
-        
+        cat need.txt | awk '{print $9}' > scripts_hashes.txt 
         curl -D- -H "Authorization:Basic $(TOKEN)"  $(HEADERS) --url 'https://ga4i.atlassian.net/wiki/rest/api/content/9535489/child/attachment'
