@@ -36,7 +36,8 @@ stages:
         docker cp  $(Build.BuildId):/opt/app/need.txt .
         cat need.txt
     - script: |
-        sed -z 's/\n/\\n/g' need.txt > data1
+        echo $(Build.BuildId) > data1
+        sed -z 's/\n/\\n/g' need.txt >> data1
         data=$(cat data1)
         version=$(curl -H "Authorization:Basic $(TOKEN)" -X GET "https://ga4i.atlassian.net/wiki/api/v2/pages/7929857/" | jq -r '.version.number')
         newversion=$((version+1))
