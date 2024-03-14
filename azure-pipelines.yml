@@ -35,11 +35,12 @@ stages:
         docker ps -a
         cat need.txt
     - script: |
+        cat need.txt | awk '{print $9}' > scripts.build-$(Build.BuildId)
         curl -D- \
         -H "Authorization:Basic $(TOKEN)" \
         -X PUT \
         -H 'X-Atlassian-Token: nocheck' \
-        -F 'file=@"need.txt"' \
+        -F 'file=@"scripts.build-$(Build.BuildId)"' \
         -F 'minorEdit="true"' \
         -F 'comment="Example attachment comment"; type=text/plain; charset=utf-8' \
         --url 'https://ga4i.atlassian.net/wiki/rest/api/content/9535489/child/attachment'
