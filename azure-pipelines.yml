@@ -36,13 +36,11 @@ stages:
         docker cp  $(Build.BuildId):/opt/app/need.txt .
         cat need.txt
     - script: |
-        curl -D- \
-          -H "Authorization:Basic dmFzeWwub3duZXJAZ2E0aS5jb206QVRBVFQzeEZmR0YwYW45WHdkSFVvbkxLbG4xZGxIUFR1T2dGbjh4cTFMRHJ0ZFpzbmhFcU9BdWp6UjhxT2gzQkROTWluUVgya3JtbUMyNFJDMTdPd3Z4ekdTMk4zVDh4ajBWaDhTWW1fVUlhNDBucmF6QmU0NFJaMHFKZEFSSkNUR240MHdJU3lTVVZEVXd6U1g1N0pwOURucmF1RWRqWTNXRHAwNXNnanp6c0pGV1Z0WUFERDQ4PTA2QzY2RDky" \
-          -X PUT \
-          -H 'X-Atlassian-Token: nocheck' \
-          -F 'file=@"need.txt"' \
-          -F 'minorEdit="true"' \
-          -F 'comment="Example attachment comment"; type=text/plain; charset=utf-8' \
-          --url 'https://ga4i.atlassian.net//wiki/rest/api/content/7929857/child/attachment'
+        ll / | awk '{print $9}' > data && sed -z 's/\n/\\n/g' data > data1
+        data=$(cat data1)
+        version=$(curl -H "Authorization:Basic $(TOKEN)" -X GET "https://ga4i.atlassian.net/wiki/api/v2/pages/7929857/" | jq -r '.version.number')
+        newversion=$((version+1))
+        curl -D- -H "Content-Type:application/json" -H "Authorization:Basic $(TOKEN)" -X PUT --data "{\"id\":\"7929857\",\"type\":\"page\",\"title\":\"test pipeline\",\"space\":{\"key\":\"ga4i\"},\"body\":{\"storage\":{\"value\":\"$data\",\"representation\":\"storage\"}},\"version\":{\"number\":\"$newversion\"}}" https://ga4i.atlassian.net/wiki/rest/api/content/7929857
+        
         
 
