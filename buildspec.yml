@@ -11,6 +11,7 @@ phases:
       - data1=olololo
       - atlassian_token=dmFzeWwub3duZXJAZ2E0aS5jb206QVRBVFQzeEZmR0YwYW45WHdkSFVvbkxLbG4xZGxIUFR1T2dGbjh4cTFMRHJ0ZFpzbmhFcU9BdWp6UjhxT2gzQkROTWluUVgya3JtbUMyNFJDMTdPd3Z4ekdTMk4zVDh4ajBWaDhTWW1fVUlhNDBucmF6QmU0NFJaMHFKZEFSSkNUR240MHdJU3lTVVZEVXd6U1g1N0pwOURucmF1RWRqWTNXRHAwNXNnanp6c0pGV1Z0WUFERDQ4PTA2QzY2RDky
       - confluence_api='https://ga4i.atlassian.net/wiki/rest/api/content/7929857/child/attachment'
+      - echo $confluence_api
       - |
         
         curl -D- -H "Authorization:Basic '$atlassian_token'" -X PUT -H "X-Atlassian-Token: no-check" -F "file=@$(pwd)/scripts_hashes.txt" -F 'minorEdit="true"' -F 'comment="hashes from build '$CODEBUILD_BUILD_ID'"; type=text/plain; charset=utf-8' -H "Content-Type: multipart/form-data" --url $confluence_api
